@@ -3,6 +3,12 @@ let form = document.querySelector('#register-form')
 form.addEventListener('submit', function (event) {
   event.preventDefault()
 
+  validateEmail()
+  validatePassword()
+
+})
+
+function validateEmail () {
   let emailInput = document.querySelector('#email-input')
   let emailAddress = emailInput.value
   let parentEl = emailInput.parentElement
@@ -18,5 +24,8 @@ form.addEventListener('submit', function (event) {
     parentEl.classList.remove("input-valid")
     parentEl.classList.add("input-invalid")
   }
-})
+}
 
+function validatePassword () {
+
+}
