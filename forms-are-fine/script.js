@@ -11,6 +11,7 @@ form.addEventListener('submit', function (event) {
 
   validateEmail()
   confirmPasswordMatch()
+  // TODO: Add more validations here!
   showValidMessage()
 })
 
@@ -24,7 +25,6 @@ function validateEmail () {
     console.log('email address is valid')
     parentEl.classList.remove('input-invalid')
     parentEl.classList.add('input-valid')
-    formIsValid = true
   } else {
     // do something else if it is invalid
     console.log('email address is invalid')
@@ -45,6 +45,7 @@ function confirmPasswordMatch () {
     // show an error message on the page
     let errorDiv = document.querySelector('#error-msg')
     errorDiv.innerHTML = 'Your passwords must match'
+    formIsValid = false
   }
 }
 
