@@ -24,43 +24,48 @@
   <h2>
     Everything is Fine.
   </h2>
-  <div class="registration-header">
-    <h3>Please register.</h3>
-  </div>
-  <form action="/" method="POST" id="register-form">
-    <div class="input-field">
-      <label for="name-input">Name</label>
-      <input type="text" id="name-input">
-    </div>
-    <div class="input-field">
-      <label for="email-input">Email</label>
-      <input type="text" id="email-input" placeholder="example@gmail.com">
-    </div>
-    <div class="input-field">
-      <label for="password-input">Password</label>
-      <input type="password" id="password-input">
-    </div>
-
-    <div class="input-field">
-      <label for="place-select">Where are you?</label>
-      <select id="place-select">
-        <option value=''>--Please select one--</option>
-        <option value="good">The Good Place</option>
-        <option value="bad">The Bad Place</option>
-      </select>
-    </div>
-    <div class="input-field">
-      <input type="checkbox" id="consent-box" checked>
-      <label for="consent-box">I agree to the Terms & Conditions</label>
-    </div>
-    <!-- <div class="input-field">
-      <label for="long-text"></label>
-      <textarea id="long-text"></textarea>
-    </div> -->
-    <div class=" input-field">
-      <input type="submit" class="button">
-    </div>
-  </form>
+  <main>
+    <div class="registration-header">
+      <h3>Please register.</h3>
+      <div class="alert alert-danger" id="error-msg"></div>
+      <form action="/" method="POST" id="register-form">
+        <div class="input-field">
+          <label for="name-input">Name</label>
+          <input type="text" id="name-input">
+        </div>
+        <div class="input-field">
+          <label for="email-input">Email</label>
+          <input type="text" id="email-input" placeholder="example@gmail.com">
+        </div>
+        <div class="input-field">
+          <label for="password-input">Password</label>
+          <input type="password" id="password-input">
+        </div>
+        <div class="input-field">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password">
+        </div>
+        <div class="input-field">
+          <label for="place-select">Where are you?</label>
+          <select id="place-select">
+            <option value=''>--Please select one--</option>
+            <option value="good">The Good Place</option>
+            <option value="bad">The Bad Place</option>
+          </select>
+        </div>
+        <div class="input-field">
+          <input type="checkbox" id="consent-box" checked>
+          <label for="consent-box">I agree to the Terms & Conditions</label>
+        </div>
+        <!-- <div class="input-field">
+        <label for="long-text"></label>
+        <textarea id="long-text"></textarea>
+      </div> -->
+        <div class=" input-field">
+          <input type="submit" class="button">
+        </div>
+      </form>
+  </main>
 </body>
 
 </html>
