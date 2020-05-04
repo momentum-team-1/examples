@@ -70,4 +70,3 @@ function resetGame () {
 
   randomNumber = Math.floor(Math.random()) + 1
 }
-s
