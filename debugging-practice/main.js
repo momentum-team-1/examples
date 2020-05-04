@@ -19,7 +19,7 @@ function checkGuess () {
   }
   guesses.textContent += userGuess + ' '
 
-  if (userGuess = randomNumber) {
+  if (userGuess === randomNumber) {
     lastResult.textContent = 'Congratulations! You got it right!'
     lastResult.style.backgroundColor = 'green'
     lowOrHi.textContent = ''
