@@ -29,11 +29,20 @@ function renderPageContent () {
 
   for (let item of menuItems) {
     let listItemElement = document.createElement("li")
-    listItemElement.innerHTML = `<img src=${item.imgUrl}>`
+    listItemElement.innerHTML = createImageElement(item.imgUrl)
+    listItemElement.appendChild(createTitleElement(item.title))
     targetElement.appendChild(listItemElement)
   }
 }
 
+function createImageElement (url) {
+    return `<img src=${url}>`
+}
 
+function createTitleElement (title) {
+  let titleEl = document.createElement("h3")
+  titleEl.innerText = `${title}`
+  return titleEl
+}
 
 renderPageContent()
