@@ -17,20 +17,23 @@ const menuItems = [
   {
     title: 'Dessert',
     imgUrl: 'https://images.unsplash.com/photo-1514849302-984523450cf4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1100&q=80'
+  },
+  {
+    title: 'Abomination Margarita',
+    imgUrl: 'https://images.unsplash.com/photo-1586968193505-208fd23ffd33?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1400&q=80'
   }
 ]
 
 function renderPageContent () {
-  console.log(menuItems)
-  let menuItem = menuItems[0]
-  console.log(menuItem.imgUrl)
-
   let targetElement = document.querySelector(".menu-items")
-  let listItemElement = document.createElement("li")
-  listItemElement.innerHTML = `<img src=${menuItem.imgUrl}>`
-  console.log(listItemElement)
-  targetElement.appendChild(listItemElement)
+
+  for (let item of menuItems) {
+    let listItemElement = document.createElement("li")
+    listItemElement.innerHTML = `<img src=${item.imgUrl}>`
+    targetElement.appendChild(listItemElement)
+  }
 }
+
 
 
 renderPageContent()
