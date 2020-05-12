@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta.25/shoelace.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+  <title>Game</title>
+</head>
+
+<body>
+  <button type="button" class="play-btn button-xl button-success" id="play-btn">PLAY!</button>
+  <section id="game" class="hidden">
+    <p class="mar-t-lg">Guess a number between 1 and 100.</p>
+    <form id="number-guess">
+      <div class="input-field">
+        <label for="user-guess">What's your guess?</label>
+        <input type="text" id="user-guess">
+      </div>
+      <div class="input-field">
+        <input type="button" class="button button-lg button-info" id="guess-btn" value="Guess! ">
+      </div>
+    </form>
+    <div id="feedback" class="alert alert-danger"></div>
+  </section>
+</body>
+
+</html>
