@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const, no-unused-vars */
-/* globals requestAnimationFrame */
+/* globals requestAnimationFrame, Keyboarder */
 
 class Game {
   constructor () {
@@ -9,13 +9,14 @@ class Game {
     this.player = new Player(gameSize)
     let animate = () => {
       this.update()
-      this.drawPlayer(context)
+      this.drawPlayer(context, gameSize)
       requestAnimationFrame(animate)
     }
     animate()
   }
 
-  drawPlayer (context) {
+  drawPlayer (context, gameSize) {
+    context.clearRect(0, 0, gameSize.x, gameSize.y)
     console.log('Draw player method called')
     context.fillStyle = '#07BEB8'
     let startingXPosition = this.player.center.x - this.player.size.x / 2
@@ -26,8 +27,8 @@ class Game {
   }
 
   update () {
-    // update all the objects
-
+    // eventually this method will have to update all the objects
+    this.player.update()
   }
 }
 
@@ -39,10 +40,12 @@ class Player {
   }
 
   update () {
-    if ("arrow right key") {
-      console.log("MOVE RIGHT")
-    } else if ("arrow left key") {
-      console.log("MOVE LEFT")
+    if (this.keyboarder.isDown(this.keyboarder.KEYS.RIGHT)) {
+      this.center.x += 2
+    } else if (this.keyboarder.isDown(this.keyboarder.KEYS.LEFT)) {
+      this.center.x -= 2
     }
   }
 }
+
+new Game()
