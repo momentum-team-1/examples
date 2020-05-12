@@ -3,11 +3,12 @@
 
 class Game {
   constructor () {
-    let canvas = document.querySelector("#game-board")
+    let canvas = document.querySelector('#game-board')
     let context = canvas.getContext('2d')
     let gameSize = { x: canvas.width, y: canvas.height }
     this.player = new Player(gameSize)
     let animate = () => {
+      this.update()
       this.drawPlayer(context)
       requestAnimationFrame(animate)
     }
@@ -23,11 +24,25 @@ class Game {
     let playerHeight = this.player.size.y
     context.fillRect(startingXPosition, startingYPosition, playerWidth, playerHeight)
   }
+
+  update () {
+    // update all the objects
+
+  }
 }
 
 class Player {
   constructor (gameSize) {
     this.size = { x: 30, y: 30 }
     this.center = { x: gameSize.x / 2, y: gameSize.y - this.size.y * 2 }
+    this.keyboarder = Keyboarder
+  }
+
+  update () {
+    if ("arrow right key") {
+      console.log("MOVE RIGHT")
+    } else if ("arrow left key") {
+      console.log("MOVE LEFT")
+    }
   }
 }
