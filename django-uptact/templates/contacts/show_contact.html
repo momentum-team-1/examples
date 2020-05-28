@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+  <h1>{{ contact.name }}</h1>
+  {% if contact.company_name %}
+  <h3>{{ contact.company_name }}</h3>
+  {% endif %}
+
+  {% for address in contact.addresses.all %}
+  <div class="flex">
+    <div class="pr2"><i class="icofont-location-pin"></i></div>
+    <div>
+      {% if address.address_type %}
+      <strong>{{ address.address_type }}</strong><br />
+      {% endif %}
+      {{ address.line_1 }}<br />
+      {% if address.line_2 %}
+        {{ address.line_2 }}<br />
+      {% endif %}
+      {{ address.city }}, {{ address.state }} {{ address.zip_code }}
+    </div>
+  </div>
+  {% endfor %}
+
+  {% if contact.phone_number %}
+  <div class="flex">
+    <div class="pr2"><i class="icofont-phone"></i></div>
+    <div>{{ contact.phone_number }}</div>
+  </div>
+  {% endif %}
+
+  {% if contact.email %}
+  <div class="flex">
+    <div class="pr2"><i class="icofont-ui-email"></i></div>
+    <div>{{ contact.email }}</div>
+  </div>
+  {% endif %}
+
+  {% if contact.birthday %}
+  <div class="flex">
+    <div class="pr2"><i class="icofont-birthday-cake"></i></div>
+    <div>{{ contact.birthday|date:"Y-m-d" }}</div>
+  </div>
+  {% endif %}
+
+  <p>
+    <a class="db" href="{% url 'list_contacts' %}">Go back to all contacts</a>
+    <a class="db" href="{% url 'edit_contact' pk=contact.pk %}">Edit Contact</a>
+    <a class="db red" href="{% url 'delete_contact' pk=contact.pk %}">Delete Contact</a>
+  </p>
+</div>
+{% endblock %}
