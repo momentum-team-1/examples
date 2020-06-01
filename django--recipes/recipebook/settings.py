@@ -17,7 +17,7 @@ import environ
 
 env = environ.Env(
     # set casting, default value
-    DEBUG=(bool, False),)
+    DEBUG=(bool, False), )
 environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / ...
@@ -47,9 +47,11 @@ INSTALLED_APPS = [
     # Third-party
     'debug_toolbar',
     'django_extensions',
+    'registration',
 
     # Project-specific
     'users',
+    'recipes',
 ]
 
 MIDDLEWARE = [
@@ -93,16 +95,20 @@ DATABASES = {'default': env.db()}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -138,3 +144,7 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+# django-registration-redux settings
+
+LOGIN_REDIRECT_URL = '/'
