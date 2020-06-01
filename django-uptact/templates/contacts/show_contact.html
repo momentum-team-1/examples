@@ -24,8 +24,8 @@
   {% endfor %}
 
   <div class="pl3 pb3">
-    <div><strong>Add a new address</strong></div>
-    <form action="{% url 'add_address' contact_pk=contact.pk %}" method="POST">
+    <div><strong><a href="#" id="add-address-link">Add a new address</a></strong></div>
+    <form action="{% url 'add_address' contact_pk=contact.pk %}" method="POST" id="address-form" class="dn">
       {% csrf_token %}
       {{ address_form.as_p }}
       <div>
