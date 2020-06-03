@@ -24,6 +24,10 @@ urlpatterns = [
     path('recipes/<int:recipe_pk>/',
          recipes_views.recipe_detail,
          name='recipe_detail'),
+    path('recipes/new/', recipes_views.add_recipe, name='add_recipe'),
+    path('recipes/<int:recipe_pk>/add_ingredient/',
+         recipes_views.add_ingredient,
+         name='add_ingredient'),
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.simple.urls')),
 ]

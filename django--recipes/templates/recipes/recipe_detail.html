@@ -5,7 +5,6 @@ Recipe Book - {{ recipe.title }}
 {% endblock %}
 
 {% block content %}
-
 <h2>{{ recipe.title }}</h2>
 
 <h3>Ingredients</h3>
@@ -14,6 +13,7 @@ Recipe Book - {{ recipe.title }}
   {% for ingredient in recipe.ingredients.all %}
     <li>{{ ingredient }}</li>
   {% endfor %}
+  <li><a href="{% url 'add_ingredient' recipe_pk=recipe.pk %}">Add another ingredient</a></li>
 </ul>
 
 <h3>Directions</h3>
