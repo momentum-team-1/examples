@@ -16,8 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
+from recipes import views as recipes_views
 
 urlpatterns = [
+    path('', recipes_views.homepage, name="homepage"),
+    path('recipes/', recipes_views.recipe_list, name='recipe_list'),
+    path('recipes/<int:recipe_pk>/',
+         recipes_views.recipe_detail,
+         name='recipe_detail'),
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.simple.urls')),
 ]
