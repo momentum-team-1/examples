@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import User
+from ordered_model.models import OrderedModel
 
 
 class Tag(models.Model):
@@ -33,12 +34,12 @@ class Ingredient(models.Model):
         return f"{self.amount} {self.item}"
 
 
-class RecipeStep(models.Model):
+class RecipeStep(OrderedModel):
     recipe = models.ForeignKey(to=Recipe,
                                on_delete=models.CASCADE,
                                related_name='steps')
-    step_num = models.PositiveIntegerField()
     text = models.TextField()
+    order_with_respect_to = 'recipe'
 
     def __str__(self):
-        return f"{self.step_num} {self.text}"
+        return f"{self.order} {self.text}"

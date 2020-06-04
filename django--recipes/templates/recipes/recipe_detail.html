@@ -7,14 +7,28 @@ Recipe Book - {{ recipe.title }}
 {% block content %}
 <h2>{{ recipe.title }}</h2>
 
+<p class="f6">
+  <a href="{% url 'edit_recipe' recipe_pk=recipe.pk %}">Edit this recipe</a>
+  <a class="red" href="{% url 'delete_recipe' recipe_pk=recipe.pk %}">Delete this recipe</a>
+</p>
+
+{% if recipe.prep_time_in_minutes %}
+  <p><strong>Prep time</strong>: {{ recipe.prep_time_in_minutes }} minutes</p>
+{% endif %}
+
+{% if recipe.cook_time_in_minutes %}
+  <p><strong>Cook time</strong>: {{ recipe.cook_time_in_minutes }} minutes</p>
+{% endif %}
+
+
 <h3>Ingredients</h3>
 
 <ul>
   {% for ingredient in recipe.ingredients.all %}
     <li>{{ ingredient }}</li>
   {% endfor %}
-  <li><a href="{% url 'add_ingredient' recipe_pk=recipe.pk %}">Add another ingredient</a></li>
 </ul>
+<p><a href="{% url 'add_ingredient' recipe_pk=recipe.pk %}">Add another ingredient</a></p>
 
 <h3>Directions</h3>
 
@@ -23,5 +37,6 @@ Recipe Book - {{ recipe.title }}
     <li>{{ step.text }}</li>
   {% endfor %}
 </ol>
+<p><a href="{% url 'add_recipe_step' recipe_pk=recipe.pk %}">Add another step</a></p>
 
 {% endblock %}

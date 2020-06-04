@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import RecipeForm, IngredientForm
+from .forms import RecipeForm, IngredientForm, RecipeStepForm
 # Create your views here.
 
 
@@ -41,20 +41,69 @@ def add_recipe(request):
 
 
 @login_required
-def add_ingredient(request, recipe_pk):
+def edit_recipe(request, recipe_pk):
     recipe = get_object_or_404(request.user.recipes, pk=recipe_pk)
 
     if request.method == "POST":
+        form = RecipeForm(instance=recipe, data=request.POST)
+        if form.is_valid():
+            recipe = form.save()
+            return redirect(to='recipe_detail', recipe_pk=recipe.pk)
+    else:
+        form = RecipeForm(instance=recipe)
+
+    return render(request, "recipes/edit_recipe.html", {
+        "form": form,
+        "recipe": recipe
+    })
+
+
+@login_required
+def delete_recipe(request, recipe_pk):
+    recipe = get_object_or_404(request.user.recipes, pk=recipe_pk)
+
+    if request.method == "POST":
+        recipe.delete()
+        return redirect(to='recipe_list')
+
+    return render(request, "recipes/delete_recipe.html", { "recipe": recipe })
+
+
+@login_required
+def add_ingredient(request, recipe_pk):
+    recipe = get_object_or_404(request.user.recipes, pk=recipe_pk)
+
+    if request.method == "POST":  # submitted the form
         form = IngredientForm(data=request.POST)
         if form.is_valid():
             ingredient = form.save(commit=False)
             ingredient.recipe = recipe
             ingredient.save()
             return redirect(to='recipe_detail', recipe_pk=recipe.pk)
-    else:
+    else:  # viewing page for first time
         form = IngredientForm()
 
     return render(request, "recipes/add_ingredient.html", {
+        "form": form,
+        "recipe": recipe
+    })
+
+
+@login_required
+def add_recipe_step(request, recipe_pk):
+    recipe = get_object_or_404(request.user.recipes, pk=recipe_pk)
+
+    if request.method == "POST":  # submitted the form
+        form = RecipeStepForm(data=request.POST)
+        if form.is_valid():
+            recipe_step = form.save(commit=False)
+            recipe_step.recipe = recipe
+            recipe_step.save()
+            return redirect(to='recipe_detail', recipe_pk=recipe.pk)
+    else:
+        form = RecipeStepForm()
+
+    return render(request, "recipes/add_recipe_step.html", {
         "form": form,
         "recipe": recipe
     })
