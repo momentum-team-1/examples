@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Tag
+from .models import Tag, Recipe
 from .forms import RecipeForm, IngredientForm, RecipeStepForm
 # Create your views here.
 
@@ -22,7 +22,7 @@ def recipe_list(request):
 
 @login_required
 def recipe_detail(request, recipe_pk):
-    recipe = get_object_or_404(request.user.recipes, pk=recipe_pk)
+    recipe = get_object_or_404(Recipe.objects.filter(user=request.user), pk=recipe_pk)
     ingredient_form = IngredientForm()
     return render(request, "recipes/recipe_detail.html", {
         "recipe": recipe,
@@ -38,6 +38,7 @@ def add_recipe(request):
             recipe = form.save(commit=False)
             recipe.user = request.user
             recipe.save()
+            recipe.set_tag_names(form.cleaned_data['tag_names'])
             return redirect(to='recipe_detail', recipe_pk=recipe.pk)
     else:
         form = RecipeForm()
@@ -53,6 +54,7 @@ def edit_recipe(request, recipe_pk):
         form = RecipeForm(instance=recipe, data=request.POST)
         if form.is_valid():
             recipe = form.save()
+            recipe.set_tag_names(form.cleaned_data['tag_names'])
             return redirect(to='recipe_detail', recipe_pk=recipe.pk)
     else:
         form = RecipeForm(instance=recipe, initial={"tag_names": recipe.get_tag_names()})
@@ -115,6 +117,10 @@ def add_recipe_step(request, recipe_pk):
 
 @login_required
 def view_tag(request, tag_name):
+    """
+    Given a tag name, look up the tag and then get all recipes for the
+    current user with that tag.
+    """
     tag = get_object_or_404(Tag, tag=tag_name)
     recipes = tag.recipes.filter(user=request.user)
     return render(request, "recipes/tag_detail.html", {"tag": tag, "recipes": recipes})
