@@ -55,7 +55,7 @@ def edit_recipe(request, recipe_pk):
             recipe = form.save()
             return redirect(to='recipe_detail', recipe_pk=recipe.pk)
     else:
-        form = RecipeForm(instance=recipe)
+        form = RecipeForm(instance=recipe, initial={"tag_names": recipe.get_tag_names()})
 
     return render(request, "recipes/edit_recipe.html", {
         "form": form,
