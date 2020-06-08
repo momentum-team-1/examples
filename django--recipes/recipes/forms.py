@@ -10,6 +10,11 @@ class RecipeForm(forms.ModelForm):
             'prep_time_in_minutes',
             'cook_time_in_minutes',
         ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'pa2 f4 w-100'}),
+            'prep_time_in_minutes': forms.NumberInput(attrs={'class': 'pa2 f4 w-100'}),
+            'cook_time_in_minutes': forms.NumberInput(attrs={'class': 'pa2 f4 w-100'}),
+        }
 
 
 class IngredientForm(forms.ModelForm):

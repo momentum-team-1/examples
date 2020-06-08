@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from .models import Tag
 from .forms import RecipeForm, IngredientForm, RecipeStepForm
 # Create your views here.
 
@@ -22,7 +23,11 @@ def recipe_list(request):
 @login_required
 def recipe_detail(request, recipe_pk):
     recipe = get_object_or_404(request.user.recipes, pk=recipe_pk)
-    return render(request, "recipes/recipe_detail.html", {"recipe": recipe})
+    ingredient_form = IngredientForm()
+    return render(request, "recipes/recipe_detail.html", {
+        "recipe": recipe,
+        "ingredient_form": ingredient_form,
+    })
 
 
 @login_required
@@ -107,3 +112,9 @@ def add_recipe_step(request, recipe_pk):
         "form": form,
         "recipe": recipe
     })
+
+@login_required
+def view_tag(request, tag_name):
+    tag = get_object_or_404(Tag, tag=tag_name)
+    recipes = tag.recipes.filter(user=request.user)
+    return render(request, "recipes/tag_detail.html", {"tag": tag, "recipes": recipes})
