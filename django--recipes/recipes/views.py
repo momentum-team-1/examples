@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Tag, Recipe, search_recipes_for_user
-from .forms import RecipeForm, IngredientForm, RecipeStepForm
+from .forms import RecipeForm, IngredientForm, RecipeStepForm, make_meal_plan_form_for_user
+import datetime
 
 # Create your views here.
 
@@ -141,4 +142,37 @@ def search_recipes(request):
     return render(request, "recipes/search.html", {
         "recipes": recipes,
         "query": query
+    })
+
+@login_required
+def show_meal_plan(request, year, month, day):
+    """
+    Given a year, month, and day, look up the meal plan for the current user for that
+    day and display it.
+
+    If a form is submitted to add a recipe, then go ahead and add recipe to the
+    meal plan for that day.
+    """
+    date_for_plan = datetime.date(year, month, day)
+    next_day = date_for_plan + datetime.timedelta(days=1)
+    prev_day = date_for_plan + datetime.timedelta(days=-1)
+    meal_plan, _ = request.user.meal_plans.get_or_create(date=date_for_plan)
+
+    if request.method == "POST":
+        form = make_meal_plan_form_for_user(user=request.user, data=request.POST)
+
+        if form.is_valid():
+            recipe = request.user.recipes.get(pk=form.cleaned_data['recipe'])
+            meal_plan.recipes.add(recipe)
+        else:
+            print(form.errors)
+
+    form = make_meal_plan_form_for_user(user=request.user)
+
+    return render(request, "recipes/show_meal_plan.html", {
+        "plan": meal_plan,
+        "date": date_for_plan,
+        "form": form,
+        "next_day": next_day,
+        "prev_day": prev_day,
     })

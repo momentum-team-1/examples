@@ -38,6 +38,7 @@ urlpatterns = [
          recipes_views.add_recipe_step,
          name='add_recipe_step'),
     path('recipes/search/', recipes_views.search_recipes, name='search_recipes'),
+    path('mealplan/<int:year>/<int:month>/<int:day>/', recipes_views.show_meal_plan, name='show_meal_plan'),
     path('tags/<str:tag_name>/', recipes_views.view_tag, name='view_tag'),
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.simple.urls')),

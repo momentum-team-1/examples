@@ -42,7 +42,6 @@ class Recipe(models.Model):
             tags.append(tag)
         self.tags.set(tags)
 
-
     def __str__(self):
         return self.title
 
@@ -68,5 +67,20 @@ class RecipeStep(OrderedModel):
     def __str__(self):
         return f"{self.order} {self.text}"
 
+
 def search_recipes_for_user(user, query):
-    return user.recipes.filter(Q(title__icontains=query) | Q(ingredients__item__icontains=query)).distinct()
+    return user.recipes.filter(
+        Q(title__icontains=query)
+        | Q(ingredients__item__icontains=query)).distinct()
+
+
+class MealPlan(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="meal_plans")
+    date = models.DateField(verbose_name="Date for plan")
+    recipes = models.ManyToManyField(to=Recipe, related_name="meal_plans")
+
+    class Meta:
+        unique_together = [
+            'user',
+            'date',
+        ]
