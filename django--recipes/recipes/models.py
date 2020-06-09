@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from users.models import User
 from ordered_model.models import OrderedModel
 
@@ -66,3 +67,6 @@ class RecipeStep(OrderedModel):
 
     def __str__(self):
         return f"{self.order} {self.text}"
+
+def search_recipes_for_user(user, query):
+    return user.recipes.filter(Q(title__icontains=query) | Q(ingredients__item__icontains=query)).distinct()

@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Tag, Recipe
+from .models import Tag, Recipe, search_recipes_for_user
 from .forms import RecipeForm, IngredientForm, RecipeStepForm
+
 # Create your views here.
 
 
@@ -124,3 +125,20 @@ def view_tag(request, tag_name):
     tag = get_object_or_404(Tag, tag=tag_name)
     recipes = tag.recipes.filter(user=request.user)
     return render(request, "recipes/tag_detail.html", {"tag": tag, "recipes": recipes})
+
+@login_required
+def search_recipes(request):
+    """
+    Show a search form. If the user has submitted the form, show the results of the search.
+    """
+    query = request.GET.get('q')
+
+    if query is not None:
+        recipes = search_recipes_for_user(request.user, query)
+    else:
+        recipes = None
+
+    return render(request, "recipes/search.html", {
+        "recipes": recipes,
+        "query": query
+    })
