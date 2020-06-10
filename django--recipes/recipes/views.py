@@ -156,6 +156,8 @@ def show_meal_plan(request, year, month, day):
     date_for_plan = datetime.date(year, month, day)
     next_day = date_for_plan + datetime.timedelta(days=1)
     prev_day = date_for_plan + datetime.timedelta(days=-1)
+
+    # https://docs.djangoproject.com/en/3.0/ref/models/querysets/#get-or-create
     meal_plan, _ = request.user.meal_plans.get_or_create(date=date_for_plan)
 
     if request.method == "POST":
