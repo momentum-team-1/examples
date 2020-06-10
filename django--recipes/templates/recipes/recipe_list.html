@@ -7,6 +7,11 @@
   <a href="{% url 'add_recipe' %}">Add new recipe</a>
 </p>
 
+<p>
+  <a href="{% url 'random_recipe' %}">Take me to a random recipe</a>
+</p>
+
+
 <ul>
   {% for recipe in recipes %}
     <li><a href="{% url 'recipe_detail' recipe_pk=recipe.pk %}">{{ recipe.title }}</a></li>

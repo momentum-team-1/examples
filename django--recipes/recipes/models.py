@@ -19,6 +19,7 @@ class Recipe(models.Model):
     prep_time_in_minutes = models.PositiveIntegerField(null=True, blank=True)
     cook_time_in_minutes = models.PositiveIntegerField(null=True, blank=True)
     tags = models.ManyToManyField(to=Tag, related_name="recipes")
+    original_recipe = models.ForeignKey(to='self', on_delete=models.SET_NULL, null=True, blank=True)
 
     def get_tag_names(self):
         tag_names = []

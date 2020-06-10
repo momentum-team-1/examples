@@ -11,10 +11,14 @@ Recipe Book - {{ recipe.title }}
 
 {% block content %}
 <h2>{{ recipe.title }}</h2>
+{% if recipe.original_recipe %}
+<p>Copied from <a href="{% url 'recipe_detail' recipe_pk=recipe.original_recipe.pk %}">{{ recipe.original_recipe.title }}</a></p>
+{% endif %}
 
 <p class="f6">
   <a href="{% url 'edit_recipe' recipe_pk=recipe.pk %}">Edit this recipe</a>
   <a class="red" href="{% url 'delete_recipe' recipe_pk=recipe.pk %}">Delete this recipe</a>
+  <a href="{% url 'copy_recipe' recipe_pk=recipe.pk %}">Copy this recipe</a>
 </p>
 
 {% if recipe.prep_time_in_minutes %}

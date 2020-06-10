@@ -176,3 +176,41 @@ def show_meal_plan(request, year, month, day):
         "next_day": next_day,
         "prev_day": prev_day,
     })
+
+@login_required
+def show_random_recipe(request):
+    """
+    Find a random recipe and show it on the page.
+    """
+    recipe = request.user.recipes.order_by('?').first()
+    ingredient_form = IngredientForm()
+    return render(request, "recipes/recipe_detail.html", {
+        "recipe": recipe,
+        "ingredient_form": ingredient_form,
+    })
+
+@login_required
+def copy_recipe(request, recipe_pk):
+    """
+    Copy a recipe and assign it to the user. This requires us to copy
+    all ingredients and steps from the original recipe as well.
+    """
+    original_recipe = get_object_or_404(Recipe, pk=recipe_pk)
+    cloned_recipe = Recipe(
+        title=original_recipe.title + " (Copy)",
+        prep_time_in_minutes=original_recipe.prep_time_in_minutes,
+        cook_time_in_minutes=original_recipe.cook_time_in_minutes,
+        user=request.user,
+        original_recipe=original_recipe
+    )
+    cloned_recipe.save()
+
+    for ingredient in original_recipe.ingredients.all():
+        cloned_recipe.ingredients.create(amount=ingredient.amount, item=ingredient.item)
+
+    for recipe_step in original_recipe.steps.all():
+        cloned_recipe.steps.create(text=recipe_step.text)
+
+    cloned_recipe.tags.set(original_recipe.tags.all())
+
+    return redirect(to='recipe_detail', recipe_pk=cloned_recipe.pk)
